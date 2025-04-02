@@ -32,7 +32,7 @@ public class testOrgChart {
 		company.addDirectReport(e7, e9);
 		
 		// show it depth first
-		company.showOrgChartDepthFirst();
+		//company.showOrgChartDepthFirst();
 		
 		// show breadth first
 		company.showOrgChartBreadthFirst();
