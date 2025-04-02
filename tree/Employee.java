@@ -46,7 +46,7 @@ public class Employee implements Comparable<Employee> {
 	}
 
 	public boolean equals(Employee e) {
-		if (this.name.equals(e.name) && this.id == e.id && this.position.equals(e.position))
+		if (this.name.equals(e.name) && (this.id == e.id) && this.position.equals(e.position))
 			return true;
 		return false;
 	}

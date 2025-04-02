@@ -31,6 +31,7 @@ public class OrgChartImpl implements OrgChart{
 				GenericTreeNode<Employee> newE = new GenericTreeNode(newPerson);
 				currentEmployee.addChild(newE);
 				nodes.add(newE);
+				break;
 			}
 		}
 		
@@ -60,17 +61,13 @@ public class OrgChartImpl implements OrgChart{
 	public void showOrgChartBreadthFirst() {
 		Queue<GenericTreeNode<Employee>> q = new LinkedList<>();
 		List<GenericTreeNode<Employee>> exploredEmployees =new ArrayList<>();
-		for(GenericTreeNode<Employee> x: nodes) {
-			q.add(x);
-			while(!q.isEmpty()) {
-				GenericTreeNode<Employee> temp = x;
-				for(GenericTreeNode<Employee> y: temp.children) {
-					exploredEmployees.add(y);
-				}
+		q.add(root);
+		while(!q.isEmpty()) {
+			GenericTreeNode<Employee> temp = q.poll();
+			System.out.println(temp.data.getName());
+			for(GenericTreeNode<Employee> y: temp.children) {
+				q.add(y);
 			}
-		}
-		for(GenericTreeNode<Employee> currentEmployee: exploredEmployees) {
-			System.out.println(currentEmployee.data.getName());
 		}
 		
 	}
