@@ -37,35 +37,53 @@ public class OrgChartImpl implements OrgChart{
 		}
 		
 	}
-				/*GenericTreeNode<Employee> thisMngr = findEmployee(manager);
-				if(thisMngr != null) {
-					GenericTreeNode<Employee> newNode = new GenericTreeNode<Employee>(newPerson);
-					nodes.add(newNode);
-					thisMngr.addChild(newNode);
-				}*/
-		
+			
 	
 
 	@Override
 	public void removeEmployee(Employee firedPerson) {
-		// TODO Auto-generated method stub
-		for(int i = 0; i < nodes.size(); i++) {
-			GenericTreeNode<Employee> child = nodes.get(i);
-			if(child.data.equals(firedPerson)) {
-				GenericTreeNode<Employee> parent = nodes.get(i-1);
-				ArrayList<GenericTreeNode<Employee>> grandchildren = child.children;
-				
-				.addAll(grandchildren);
-				
-				nodes.remove(i);
-				
-			}
-		}
+		 if (root == null) {
+			 System.out.println("Tree is empty");
+			 return;
+		 }
+		
+		//special case if the fired person is the root
+		if (root.data.equals(firedPerson)) {
+	        if (!root.children.isEmpty()) {
+
+	        	root = root.children.get(0);
+
+	        	for (int i = 1; i < root.children.size(); i++) {
+	                root.addChild(root.children.get(i));
+	            }
+	        } else {
+	            root = null; 
+	        }
+	        nodes.remove(0);
+	        return;
+	    }
+		
+		
+		
+		 for (GenericTreeNode<Employee> parent : nodes) {
+		        for (int i = 0; i < parent.children.size(); i++) {
+		            GenericTreeNode<Employee> child = parent.children.get(i);
+		            
+		            if (child.data.equals(firedPerson)) {
+		            	//found fired Person
+		                parent.children.addAll(child.children);
+		                parent.children.remove(i);
+		                nodes.remove(child);
+		                return;
+		                
+		            }
+		        }
+		    }
+	
 	}
 
 	@Override
 	public void showOrgChartDepthFirst() {
-		// TODO Auto-generated method stub
 		
 		if(root != null) {
 			Stack<GenericTreeNode<Employee>> stack = new Stack<>();
@@ -73,7 +91,7 @@ public class OrgChartImpl implements OrgChart{
 			
 			while(!stack.isEmpty()) {
 				GenericTreeNode<Employee> current = stack.pop();
-				System.out.println(current.data);
+				System.out.println("- " + current.data + " "  );
 				
 				for(int i = current.children.size() -1; i >= 0; i--) {
 					stack.push(current.children.get(i));
@@ -87,14 +105,24 @@ public class OrgChartImpl implements OrgChart{
 
 	@Override
 	public void showOrgChartBreadthFirst() {
+		
+		int count = 0;
+		int printed = 0;
 		Queue<GenericTreeNode<Employee>> q = new LinkedList<>();
 		List<GenericTreeNode<Employee>> exploredEmployees =new ArrayList<>();
 		q.add(root);
 		while(!q.isEmpty()) {
 			GenericTreeNode<Employee> temp = q.poll();
-			System.out.println(temp.data.getName());
+			System.out.print(temp.data.getName() + " ");
+			printed++;
+			/**if(count==printed) {
+				count =0;
+				printed = 0;
+				System.out.println();
+			}**/
 			for(GenericTreeNode<Employee> y: temp.children) {
 				q.add(y);
+				count++;
 			}
 		}
 		
