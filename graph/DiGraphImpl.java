@@ -9,7 +9,6 @@ import java.util.Map;
 public class DiGraphImpl implements DiGraph{
 
 	private List<GraphNode> nodeList = new ArrayList<>();
-	private Map<GraphNode, List<GraphEdge>> adjacencyList = new HashMap<>();
 
 	@Override
 	public Boolean addNode(GraphNode node) {
@@ -72,8 +71,7 @@ public class DiGraphImpl implements DiGraph{
 
 	@Override
 	public Boolean nodesAreAdjacent(GraphNode fromNode, GraphNode toNode) {
-		// TODO Auto-generated method stub
-		return null;
+		return fromNode.getNeighbors().contains(toNode);
 	}
 
 	@Override
@@ -95,7 +93,11 @@ public class DiGraphImpl implements DiGraph{
 
 	@Override
 	public GraphNode getNode(String nodeValue) {
-		// TODO Auto-generated method stub
+		for (GraphNode node : nodeList) {
+			if (node.getValue().equals(nodeValue)) {
+				return node;
+			}
+		}
 		return null;
 	}
 
