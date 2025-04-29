@@ -46,32 +46,28 @@ public class DiGraphImpl implements DiGraph{
 
 	@Override
 	public Boolean addEdge(GraphNode fromNode, GraphNode toNode, Integer weight) {
-		//TODO Auto-generated method stub
-		return null;
+		return fromNode.addNeighbor(toNode, weight);
 	}
 
 	@Override
 	public Boolean removeEdge(GraphNode fromNode, GraphNode toNode) {
-		// TODO Auto-generated method stub
-		return null;
+		return fromNode.removeNeighbor(toNode);
 	}
 
 	@Override
 	public Boolean setEdgeValue(GraphNode fromNode, GraphNode toNode, Integer newWeight) {
-		// TODO Auto-generated method stub
-		return null;
+		fromNode.removeNeighbor(toNode);
+		return fromNode.addNeighbor(toNode, newWeight);
 	}
 
 	@Override
 	public Integer getEdgeValue(GraphNode fromNode, GraphNode toNode) {
-		// TODO Auto-generated method stub
-		return null;
+		return fromNode.getDistanceToNeighbor(toNode);
 	}
 
 	@Override
 	public List<GraphNode> getAdjacentNodes(GraphNode node) {
-		// TODO Auto-generated method stub
-		return null;
+		return node.getNeighbors();
 	}
 
 	@Override
@@ -94,8 +90,7 @@ public class DiGraphImpl implements DiGraph{
 
 	@Override
 	public List<GraphNode> getNodes() {
-		// TODO Auto-generated method stub
-		return null;
+		return nodeList;
 	}
 
 	@Override
