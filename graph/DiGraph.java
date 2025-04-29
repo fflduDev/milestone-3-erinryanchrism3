@@ -10,6 +10,7 @@ public interface DiGraph {
 	public String getNodeValue(GraphNode node);
 	
 	public Boolean addEdge(GraphNode fromNode, GraphNode toNode, Integer weight);
+	public Boolean addEdgeStr(String fromNode, String toNode, Integer weight);
 	public Boolean removeEdge(GraphNode fromNode, GraphNode toNode);
 	public Boolean setEdgeValue(GraphNode fromNode, GraphNode toNode, Integer newWeight);
 	public Integer getEdgeValue(GraphNode fromNode, GraphNode toNode);

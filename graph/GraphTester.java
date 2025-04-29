@@ -14,6 +14,22 @@ public class GraphTester {
 		else nodeList.forEach((n) -> System.out.println(n.getValue()));
 	}
 	
+	//helper function to print all the edges
+	public static void printEdges(List<GraphNode> nodeList) {
+		for (GraphNode node : nodeList) {
+			System.out.println("All edges from <" + node.getValue() + "> are:");
+			List<GraphNode> neighbors = node.getNeighbors();
+			if (neighbors.isEmpty()) {
+				System.out.println("- There is no edge from <" + node.getValue() + ">.");
+			} else {
+				for (GraphNode neighbor : neighbors) {
+					int weight = node.getDistanceToNeighbor(neighbor);
+					System.out.println("- Edge to <" + neighbor.getValue() + ">, with weight " + weight + ".");
+				}
+			}
+		}
+	}
+	
 	public static void printPath(List<GraphNode> path) {
 		System.out.println("Path is:");
 		if (path == null) System.out.println("---- no path found ----");
@@ -28,7 +44,6 @@ public class GraphTester {
 		graph = new DiGraphImpl();
 		
 		//add nodes
-		graph.addNode(new GraphNode("A"));
 		graph.addNode(new GraphNode("A"));
 		graph.addNode(new GraphNode("B"));
 		graph.addNode(new GraphNode("C"));	
@@ -51,25 +66,30 @@ public class GraphTester {
 		
 		//describe
 		printNodesValues(graph.getNodes());
-		graph.getNodes().forEach(n -> n.printNeighbors());
+		System.out.println();
+		printEdges(graph.getNodes());
+		graph.getNodes().forEach(n -> n.getNeighbors());
 		
 		//test reachability
+		System.out.println();
 		System.out.print("F is reachable to E: ");
-		System.out.println(graph.nodeIsReachable(new GraphNode("F"), new GraphNode("E"))); //false
+		System.out.println(graph.nodeIsReachable(graph.getNode("F"), graph.getNode("E"))); //false
 		System.out.print("F is reachable to D: ");
-		System.out.println(graph.nodeIsReachable(new GraphNode("F"), new GraphNode("D"))); //true
+		System.out.println(graph.nodeIsReachable(graph.getNode("F"), graph.getNode("D"))); //true
 		
 		//test hasCycles
+		System.out.println();
 		System.out.print("Graph has cycles: ");
 		System.out.println(graph.hasCycles());
 		
 		//test fewest hops
-		System.out.println("Fewest hop from G to B is: " + graph.fewestHops(new GraphNode("G"), new GraphNode("B")));
+		/* System.out.println("Fewest hop from G to B is: " + graph.fewestHops(new GraphNode("G"), new GraphNode("B")));
 		printPath(graph.getFewestHopsPath(new GraphNode("G"), new GraphNode("B")));
 		
 		//test shortest path
 		System.out.println("Shortest from G to B is: " + graph.shortestPath(new GraphNode("G"), new GraphNode("B"))); 
 		printPath(graph.getShortestPath(new GraphNode("G"), new GraphNode("B")));
+	*/
 	}
 	
 }

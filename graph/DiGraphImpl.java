@@ -47,6 +47,27 @@ public class DiGraphImpl implements DiGraph{
 	public Boolean addEdge(GraphNode fromNode, GraphNode toNode, Integer weight) {
 		return fromNode.addNeighbor(toNode, weight);
 	}
+	
+	@Override
+	public Boolean addEdgeStr(String fromNode, String toNode, Integer weight) {
+	    GraphNode fromNode1 = null;
+	    GraphNode toNode1 = null;
+
+	    for (GraphNode node : nodeList) {
+	        if (node.getValue().equals(fromNode)) {
+	            fromNode1 = node;
+	        }
+	        if (node.getValue().equals(toNode)) {
+	            toNode1 = node;
+	        }
+	    }
+
+	    if (fromNode1 != null && toNode1 != null) {
+	        return addEdge(fromNode1, toNode1, weight);  
+	    }
+
+	    return false;  
+	}
 
 	@Override
 	public Boolean removeEdge(GraphNode fromNode, GraphNode toNode) {
@@ -76,13 +97,33 @@ public class DiGraphImpl implements DiGraph{
 
 	@Override
 	public Boolean nodeIsReachable(GraphNode fromNode, GraphNode toNode) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<GraphNode> visited = new ArrayList<>();
+		List<GraphNode> queue = new ArrayList<>();
+		
+		queue.add(fromNode);
+		while(!queue.isEmpty()) {
+			GraphNode current = queue.remove(0);
+			if(current.equals(toNode)) {
+			return true;
+		}
+			
+		if(!visited.contains(current)) {
+			visited.add(current);
+			for(GraphNode neighbor : current.getNeighbors()) {
+				if(!visited.contains(neighbor)) {
+					queue.add(neighbor);
+				}
+			}
+		}
+	}
+		
+		return false;
 	}
 
 	@Override
 	public Boolean hasCycles() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
