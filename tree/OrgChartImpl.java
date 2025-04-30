@@ -109,23 +109,23 @@ public class OrgChartImpl implements OrgChart{
 		int count = 0;
 		int printed = 0;
 		Queue<GenericTreeNode<Employee>> q = new LinkedList<>();
-		List<GenericTreeNode<Employee>> exploredEmployees =new ArrayList<>();
+		
 		q.add(root);
+		
 		while(!q.isEmpty()) {
-			GenericTreeNode<Employee> temp = q.poll();
-			System.out.print(temp.data.getName() + " ");
-			printed++;
-			/**if(count==printed) {
-				count =0;
-				printed = 0;
-				System.out.println();
-			}**/
+			
+			int levelSize = q.size();
+			for(int i = 0; i< levelSize; i++) {
+				GenericTreeNode<Employee> temp = q.poll();
+				
+				
+				System.out.print(temp.data + " - ");
+			
 			for(GenericTreeNode<Employee> y: temp.children) {
 				q.add(y);
-				count++;
 			}
 		}
-		
+		System.out.println();
 	}
-	
+	}
 }

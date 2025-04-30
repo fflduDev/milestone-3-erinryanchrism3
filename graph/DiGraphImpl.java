@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
+import java.util.Stack;
  
 
 public class DiGraphImpl implements DiGraph{
@@ -230,7 +231,101 @@ public class DiGraphImpl implements DiGraph{
 
 	    return -1;
 	}
+
+	@Override
+	public List<GraphNode> getFewestHopsPath(GraphNode fromNode, GraphNode toNode) {
+		if (fromNode == null || toNode == null) {
+	        return null;
+	    }
+
+	    Set<GraphNode> visited = new HashSet<>();
+	    Queue<GraphNode> queue = new LinkedList<>();
+    	Map<GraphNode,GraphNode> pathMap = new HashMap<>();
+
+
+	    queue.add(fromNode);
+	    visited.add(fromNode);
+
+	
+
+	    while (!queue.isEmpty()) {
+	        GraphNode current = queue.poll();
+	        if (current.equals(toNode)) {
+	        	List<GraphNode> path = new LinkedList<>();
+	        	for (GraphNode node = toNode; node != null; node= pathMap.get(node)){
+	        		path.add(0,node);
+	        	}
+	        			
+	            return path;
+	        }
+
+	        for (GraphNode neighbor : current.getNeighbors()) {
+	            if (!visited.contains(neighbor)) {
+	            	
+	                visited.add(neighbor);
+	                queue.add(neighbor);
+	                pathMap.put(neighbor, current);
+	            }
+	        }
+	    }
+
+	    return null;
+	}
+
+	@Override
+	public List<GraphNode> getPath(GraphNode fromNode, GraphNode toNode) {
+		
+			// TODO Auto-generated method stub
+			if (fromNode == null || toNode == null) return null;
+			
+			Map<GraphNode,GraphNode> pathMap = new HashMap<>();
+		    Map<GraphNode, Integer> distances = new HashMap<>();
+		    Set<GraphNode> visited = new HashSet<>();
+		    PriorityQueue<GraphNode> queue = new PriorityQueue<>(
+		        (a, b) -> distances.get(a) - distances.get(b)
+		    );
+
+		    for (GraphNode node : nodeList) {
+		        distances.put(node, Integer.MAX_VALUE);
+		    }
+
+		    distances.put(fromNode, 0);
+		    queue.add(fromNode);
+
+		    while (!queue.isEmpty()) {
+		        GraphNode current = queue.poll();
+		        if (!visited.add(current)) continue;
+
+		        if (current.equals(toNode)) {
+		        	List<GraphNode> path = new LinkedList<>();
+		        	for (GraphNode node = toNode; node != null; node= pathMap.get(node)){
+		        		path.add(0,node);
+		        	}
+		        			return path;
+		        }
+
+		        for (GraphNode neighbor : current.getNeighbors()) {
+		            if (visited.contains(neighbor)) continue;
+
+		            int currentDistance = distances.get(current);
+		            int edgeWeight = current.getDistanceToNeighbor(neighbor);
+		            int newDistance = currentDistance + edgeWeight;
+
+		            if (newDistance < distances.get(neighbor)) {
+		                distances.put(neighbor, newDistance);
+		                queue.add(neighbor);
+		                pathMap.put(neighbor, current);
+		            }
+		        }
+		    }
+
+		
+		
+		return null;
+	}
+
+	}
 	
 	
 	
-}
+
