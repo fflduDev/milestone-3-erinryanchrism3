@@ -83,13 +83,13 @@ public class GraphTester {
 		System.out.println(graph.hasCycles());
 		
 		//test fewest hops
-		/* System.out.println("Fewest hop from G to B is: " + graph.fewestHops(new GraphNode("G"), new GraphNode("B")));
-		printPath(graph.getFewestHopsPath(new GraphNode("G"), new GraphNode("B")));
+		System.out.println("Fewest hop from G to B is: " + graph.fewestHops(graph.getNode("G"), graph.getNode("B")));
+		//printPath(graph.getFewestHopsPath(new GraphNode("G"), new GraphNode("B")));
 		
 		//test shortest path
-		System.out.println("Shortest from G to B is: " + graph.shortestPath(new GraphNode("G"), new GraphNode("B"))); 
-		printPath(graph.getShortestPath(new GraphNode("G"), new GraphNode("B")));
-	*/
+		System.out.println("Shortest from G to B is: " + graph.shortestPath(graph.getNode("G"), graph.getNode("B"))); 
+		//printPath(graph.getShortestPath(new GraphNode("G"), new GraphNode("B")));
+
 	}
 	
 }
